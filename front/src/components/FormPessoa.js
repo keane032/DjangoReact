@@ -8,7 +8,7 @@ class FormPessoa extends Component {
     constructor(props){
         super(props)
         this.state = {nome:'', endereco:'', idade:''}
-      
+    
         this.mudarValor = this.mudarValor.bind(this)
         this.enviar = this.enviar.bind(this)
     }
@@ -17,7 +17,13 @@ class FormPessoa extends Component {
         this.setState({[event.target.name]:event.target.value,})
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        // let id = 0;
+        // axios.get(URL + id).then(
+        //     res => {
+        //     }
+        // )
+    }
 
     enviar(){
         console.log(this.state)
@@ -33,11 +39,11 @@ class FormPessoa extends Component {
             <div id="formulario">
                 <h1>Formulario</h1>
                 <label>Nome</label>
-                <input type="text" name="nome" value={this.state.nome} onChange={this.mudarValor}/><br/>
+                <input type="text" id="nome" name="nome" value={this.state.nome} onChange={this.mudarValor}/><br/>
                 <label>Endereco</label>
-                <input type="text" name="endereco" value={this.state.endereco} onChange={this.mudarValor}/><br/>
+                <input type="text" id="endereco" name="endereco" value={this.state.endereco} onChange={this.mudarValor}/><br/>
                 <label>idade</label>
-                <input type="number" name="idade" value={this.state.idade} onChange={this.mudarValor}/><br/>          
+                <input type="number" id="idade" name="idade" value={this.state.idade} onChange={this.mudarValor}/><br/>          
                 <button onClick={this.enviar}>Salvar</button>
             </div>
         );

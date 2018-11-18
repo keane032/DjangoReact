@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
 import '../style/ListarPessoas.css'
 const url = "http://localhost:8000/clientes/"
 
@@ -13,6 +14,7 @@ class ListarPessoas extends Component {
        
         this.componentDidMount = this.componentDidMount.bind(this)
         this.detalhes = this.detalhes.bind(this)
+        this.remover = this.remover.bind(this)
     }
 
     componentDidMount() {
@@ -23,8 +25,18 @@ class ListarPessoas extends Component {
             })
     }
 
-    detalhes(id){
-        
+    detalhes(event){
+       console.log(event.target.id) 
+    }
+
+    remover(event){
+        console.log(event.target.id) 
+        let id = event.target.id + "/"
+        axios.delete(url + id).then(
+            res => {
+                window.location.reload();
+            }
+        )
     }
 
     render() {
@@ -32,8 +44,14 @@ class ListarPessoas extends Component {
             <div id="ListaPessoas">
                 <h1>Agenda</h1>
                 <ul>
-                    {this.state.persons.map(person => <li key={person.id}
-                     onClick={this.atualizar}>{person.nome}</li>)}
+                    {this.state.persons.map(person => <li id = {person.id} onClick={this.detalhes}
+                    key={person.id}>{person.nome}
+                    <div id="detalhes" className="hidden">
+                        Idade: {person.idade} <br/>  
+                        Endereco: {person.endereco} <br/>
+                        <button id={person.id} onClick={this.remover}>remover</button>
+                    </div>
+                    </li>)}
                 </ul>
             </div>
         );

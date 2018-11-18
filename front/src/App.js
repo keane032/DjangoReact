@@ -8,6 +8,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
             Lista de Clinetes
+        <ul id="menu"> 
         <li>
           <Link to='/ListarPessoas'>
           Listar Clinetes
@@ -17,7 +18,8 @@ class App extends Component {
           <Link to='/AdicionarPessoa'>
           Adicionar novo Clinetes
           </Link>  
-        </li>            
+        </li>
+        </ul>            
         </header>
       </div>
     );
