@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ReactTable from 'react-table';
 
+import 'react-table/react-table.css'
 import '../style/ListarPessoas.css'
-const url = "http://localhost:8000/clientes/"
+const url = "http://localhost:8000/pessoas/"
 
 class ListarPessoas extends Component {
 
@@ -11,10 +13,11 @@ class ListarPessoas extends Component {
         this.state = {
             persons: []
         }
-       
+
         this.componentDidMount = this.componentDidMount.bind(this)
         this.detalhes = this.detalhes.bind(this)
         this.remover = this.remover.bind(this)
+        this.atualizar = this.atualizar.bind(this)
     }
 
     componentDidMount() {
@@ -25,35 +28,56 @@ class ListarPessoas extends Component {
             })
     }
 
-    detalhes(event){
-       console.log(event.target.id) 
+    detalhes(event) {
+        console.log(event.target.id)
     }
 
-    remover(event){
-        console.log(event.target.id) 
-        let id = event.target.id + "/"
+    remover(idUser) {
+        let id = idUser + "/"
         axios.delete(url + id).then(
             res => {
-                window.location.reload();
+                //this.state.persons.splice(id)
+                 window.location.reload();
             }
         )
     }
 
+    atualizar(id){
+       this.props.history.push('Atualizar/'+id)
+    }
+
     render() {
+        const columns = [{
+            Header: 'Nome',
+            accessor:'nome'
+        }, {
+            Header: 'Idade',
+            accessor: 'idade'
+        }, {
+            Header:'Endereco',
+            accessor: 'endereco'
+        }, {
+            Header: 'Opcoes',
+            accessor: 'id',
+            Cell: props => (
+                <div>
+                    <button onClick={() => this.atualizar(props.value)}>Atualizar</button>
+                    <button onClick={() => this.remover(props.value)}>Deletar</button>
+                </div>
+            )
+        }       
+        ]
+    
+        
         return (
-            <div id="ListaPessoas">
+            <div>
                 <h1>Agenda</h1>
-                <ul>
-                    {this.state.persons.map(person => <li id = {person.id} onClick={this.detalhes}
-                    key={person.id}>{person.nome}
-                    <div id="detalhes" className="hidden">
-                        Idade: {person.idade} <br/>  
-                        Endereco: {person.endereco} <br/>
-                        <button id={person.id} onClick={this.remover}>remover</button>
-                    </div>
-                    </li>)}
-                </ul>
-            </div>
+                <div>
+                    <ReactTable 
+                        data={this.state.persons} 
+                        columns={columns}/>
+               </div> 
+            </div>    
         );
     }
 }

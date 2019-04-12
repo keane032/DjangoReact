@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-
-class ComponenteDePagina404 extends Component {
+import '../style/Pagina404.css';
+class Pagina404 extends Component {
   render() {
     return (
-      <div>
+      <div id="erro">
         <h1>404 nnot found</h1>
       </div>
     );
   }
 }
 
-export default ComponenteDePagina404;
+export default Pagina404;
